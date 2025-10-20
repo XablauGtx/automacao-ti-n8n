@@ -93,7 +93,7 @@ Abra um Pull Request com novos fluxos, melhorias ou correções.
 ## 👨‍💻 Autor
 
 **Gustavo Barbosa**  
-💼 Profissional de TI • Automação • Infraestrutura • PowerShell  
+💼 Automação • Infraestrutura • IA aplicada a operações
 🌐 [Portfólio](https://gl-tech-alpha.vercel.app)  
 💻 [GitHub](https://github.com/XablauGtx) | 💬 [LinkedIn](www.linkedin.com/in/gustavo-barbosa-0909241b7)
 
