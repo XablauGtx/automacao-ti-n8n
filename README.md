@@ -93,10 +93,9 @@ Abra um Pull Request com novos fluxos, melhorias ou correções.
 ## 👨‍💻 Autor
 
 **Gustavo Barbosa**  
-💼 Automação • Infraestrutura • IA aplicada a operações
+💼 Profissional de TI • Automação • Infraestrutura • PowerShell  
 🌐 [Portfólio](https://gl-tech-alpha.vercel.app)  
 💻 [GitHub](https://github.com/XablauGtx) | 💬 [LinkedIn](https://www.linkedin.com/in/gustavo-barbosa-0909241b7)
 
 ---
-
 <p align="center"> <i>“Automatizar é transformar complexidade em eficiência.”</i><br> — n8n Automation Lab </p>
