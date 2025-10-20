@@ -95,7 +95,7 @@ Abra um Pull Request com novos fluxos, melhorias ou correções.
 **Gustavo Barbosa**  
 💼 Automação • Infraestrutura • IA aplicada a operações
 🌐 [Portfólio](https://gl-tech-alpha.vercel.app)  
-💻 [GitHub](https://github.com/XablauGtx) | 💬 [LinkedIn](www.linkedin.com/in/gustavo-barbosa-0909241b7)
+💻 [GitHub](https://github.com/XablauGtx) | 💬 [LinkedIn](./www.linkedin.com/in/gustavo-barbosa-0909241b7)
 
 ---
 
