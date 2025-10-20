@@ -22,10 +22,10 @@
 
 ## 💡 O Problema
 
-Em ambientes de TI dinâmicos, **tarefas repetitivas** consumiam tempo precioso da equipa:  
-- 🗓️ Agendamento de reuniões e gestão de calendários.  
-- 💾 Execução e verificação de backups.  
-- 🔄 Integrações manuais entre sistemas e APIs.  
+Em ambientes de TI dinâmicos, **tarefas repetitivas** consumiam tempo precioso da equipa:
+- 🗓️ Agendamento de reuniões e gestão de calendários  
+- 💾 Execução e verificação de backups  
+- 🔄 Integrações manuais entre sistemas e APIs  
 
 Essas rotinas eram **ineficientes e propensas a erro humano**, limitando a capacidade da equipa de focar em tarefas estratégicas.
 
@@ -36,91 +36,67 @@ Essas rotinas eram **ineficientes e propensas a erro humano**, limitando a capac
 Implementação de uma stack de automação **low-code com n8n** e **Docker**, criando **workflows inteligentes e escaláveis** que reduziram em **30% o tempo operacional** e aumentaram a confiabilidade dos processos.
 
 ### 🧱 Arquitetura Utilizada
+
 | Componente | Função |
 |-------------|--------|
-| 🧩 **n8n** | Plataforma de automação e orquestração de workflows. |
-| 🐳 **Docker & Compose** | Isolamento e portabilidade dos ambientes. |
-| 🐘 **PostgreSQL** | Base de dados do n8n. |
-| ⚡ **Redis** | Armazenamento de contexto de chatbots e cache. |
-| 🤖 **Google Gemini + LangChain** | Processamento de linguagem natural e IA generativa. |
-| 🔗 **APIs REST (WhatsApp, Google Calendar, Slack)** | Integração entre sistemas. |
+| 🧩 **n8n** | Plataforma de automação e orquestração de workflows |
+| 🐳 **Docker & Compose** | Isolamento e portabilidade dos ambientes |
+| 🐘 **PostgreSQL** | Base de dados do n8n |
+| ⚡ **Redis** | Armazenamento de contexto de chatbots e cache |
+| 🤖 **Google Gemini + LangChain** | Processamento de linguagem natural e IA generativa |
+| 🔗 **APIs REST (WhatsApp, Google Calendar, Slack)** | Integração entre sistemas |
 
 ---
 
 ## 🧮 Workflows Incluídos (`/workflows`)
 
 ### 1️⃣ Bot de Agendamento Inteligente (WhatsApp)
+
 📁 **`01-bot-agendamento-whatsapp.json`**
 
 **Descrição:**  
-Um assistente virtual ("Thay") que gerencia agendas via WhatsApp com IA e integrações diretas com Google Calendar.
+Um assistente virtual (“Thay”) que gerencia agendas via WhatsApp com IA e integrações diretas com o Google Calendar.
 
 **Funcionalidades:**
-- Recebe mensagens via **Webhook (WAHA API)**.  
-- Usa **Google Gemini** para interpretar mensagens.  
-- Permite **gestão administrativa** por número autorizado.  
-- Integra com o **Google Calendar** para criar, listar e apagar eventos.  
-- Usa **Redis** para manter o **contexto da conversa**.  
+- Recebe mensagens via **Webhook (WAHA API)**  
+- Usa **Google Gemini** para interpretar mensagens  
+- Permite **gestão administrativa** por número autorizado  
+- Integra com o **Google Calendar** para criar, listar e apagar eventos  
+- Usa **Redis** para manter o **contexto da conversa**
 
 ---
 
 ### 2️⃣ Backup Diário Automatizado
+
 📁 **`02-backup-diario-servidor.json`**
 
 **Descrição:**  
 Workflow que executa **backups automáticos** e envia alertas inteligentes.
 
 **Funcionalidades:**
-- ⏰ **Gatilho agendado** (02:00 da manhã).  
-- 💻 **Execução remota de script** (`pg_dump`).  
-- ✅ **Validação automática** de sucesso via código de saída.  
-- 💬 **Notificação no Slack/Teams** com emoji de status e logs do job.  
+- ⏰ **Gatilho agendado** (02:00 da manhã)  
+- 💻 **Execução remota de script** (`pg_dump`)  
+- ✅ **Validação automática** de sucesso via código de saída  
+- 💬 **Notificação no Slack/Teams** com emoji de status e logs do job  
 
 ---
-
-## ⚙️ Como Executar Localmente
-
-1️⃣ Clone o repositório:
-```bash
-git clone https://github.com/<teu-usuario>/<teu-repo>.git
-cd <teu-repo>
-```
-2️⃣ Crie o arquivo .env a partir do modelo:
-
-cp .env.example .env
-
-
-3️⃣ Inicie o ambiente:
-
-docker-compose up -d
-
-
-4️⃣ Acesse o painel do n8n:
-
-http://localhost:5678
-
-🧩 Estrutura do Projeto
-📦 n8n-automation-lab
- ┣ 📂 workflows/              # JSONs exportados dos fluxos
- ┣ 📂 assets/                 # Imagens e banners
- ┣ 📜 docker-compose.yml      # Configuração principal
- ┣ 📜 .env.example            # Variáveis de ambiente modelo
- ┗ 📜 README.md               # Este arquivo
 
 💬 Contribuições
 
 Contribuições são muito bem-vindas — automação é um trabalho coletivo!
 Abra um Pull Request com novos fluxos, melhorias ou correções.
 
-👉 Ver Issues
+👉 [Ver Issues](../../issues)
 
-👨‍💻 Autor
+---
 
-Gustavo Barbosa
-💼 Automação • Infraestrutura • IA aplicada a operações
-🌐 Portfólio
+## 👨‍💻 Autor
 
-💻 GitHub
- | 💬 LinkedIn
+**Gustavo Barbosa**  
+💼 Profissional de TI • Automação • Infraestrutura • PowerShell  
+🌐 [Portfólio](https://gl-tech-alpha.vercel.app)  
+💻 [GitHub](https://github.com/XablauGtx) | 💬 [LinkedIn](www.linkedin.com/in/gustavo-barbosa-0909241b7)
 
-<p align="center"> <i>“Automatizar é transformar complexidade em eficiência.”</i> <br>— n8n Automation Lab </p> ```
+---
+
+<p align="center"> <i>“Automatizar é transformar complexidade em eficiência.”</i><br> — n8n Automation Lab </p>
