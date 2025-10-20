@@ -1,65 +1,126 @@
-# Automação de Processos de TI com n8n
+<!-- BANNER -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/<teu-usuario>/<teu-repo>/main/assets/banner-n8n-dark.png" alt="n8n Automation Banner" width="100%">
+</p>
 
-Este repositório documenta um projeto de automação implementado para otimizar rotinas operacionais críticas da equipa de TI, resultando numa **redução de 30% no tempo gasto em tarefas manuais** e aumentando a fiabilidade dos processos.
+<h1 align="center">🤖 Automação de Processos de TI com n8n</h1>
 
----
+<p align="center">
+  <b>Automatize. Integre. Escale — Libere sua equipa de TI das tarefas manuais.</b>
+</p>
 
-## O Problema
-
-Num ambiente de TI dinâmico, uma quantidade significativa de tempo era gasta em tarefas repetitivas e manuais, tais como:
--   Agendamento de reuniões e gestão de calendário.
--   Execução de backups de sistemas e verificação de sucesso.
--   Integração manual de dados entre diferentes plataformas.
-
-Estas tarefas não só consumiam tempo valioso, como também eram propensas a erro humano.
-
-## A Solução
-
-Para resolver estes desafios, foi implementada uma solução de automação utilizando o **n8n**, orquestrado através de **Docker**. Foram criados vários workflows para automatizar os processos mais críticos.
-
-### Arquitetura Utilizada
--   **n8n:** Ferramenta de automação de workflows (low-code).
--   **Docker & Docker Compose:** Para garantir um ambiente de execução isolado, portátil e facilmente replicável.
--   **PostgreSQL:** Como base de dados para o n8n.
--   **Redis:** Para gestão de memória de conversas em chatbots.
--   **Google Gemini & LangChain:** Para processamento de linguagem natural e criação de agentes de IA.
--   **APIs REST:** Para a comunicação e integração entre os diferentes sistemas (WhatsApp, Google Calendar, Slack).
+<p align="center">
+  <a href="https://n8n.io"><img src="https://img.shields.io/badge/n8n-Automation-orange?logo=n8n&logoColor=white" alt="n8n"></a>
+  <a href="https://www.docker.com/"><img src="https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white" alt="Docker Compose"></a>
+  <a href="https://www.postgresql.org/"><img src="https://img.shields.io/badge/PostgreSQL-Database-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL"></a>
+  <a href="https://redis.io/"><img src="https://img.shields.io/badge/Redis-Memory-DC382D?logo=redis&logoColor=white" alt="Redis"></a>
+  <a href="https://ai.google.dev/"><img src="https://img.shields.io/badge/Google%20Gemini-LLM-4285F4?logo=google&logoColor=white" alt="Gemini"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Status-Ativo-brightgreen?style=flat-square" alt="Status"></a>
+</p>
 
 ---
 
-## Workflows Incluídos (.json)
+## 💡 O Problema
 
-Na pasta `/workflows`, você encontrará os exports em formato JSON dos workflows descritos neste documento.
+Em ambientes de TI dinâmicos, **tarefas repetitivas** consumiam tempo precioso da equipa:  
+- 🗓️ Agendamento de reuniões e gestão de calendários.  
+- 💾 Execução e verificação de backups.  
+- 🔄 Integrações manuais entre sistemas e APIs.  
 
-### 1. Bot de Agendamento Inteligente para WhatsApp
--   **Ficheiro:** `01-bot-agendamento-whatsapp.json`
--   **Descrição:** Este workflow implementa uma secretária virtual chamada "Thay" que interage com utilizadores via WhatsApp.
--   **Funcionalidades:**
-    -   Recebe mensagens através de um webhook ligado a uma API de WhatsApp (WAHA).
-    -   Utiliza um **Agente de IA (Google Gemini)** para interpretar as mensagens em linguagem natural.
-    -   Possui uma **lógica condicional** que dá permissões de administrador a um número específico, permitindo a gestão completa da agenda.
-    -   Conecta-se à **API do Google Calendar** para consultar, criar e apagar eventos.
-    -   Usa **Redis** para manter a memória da conversa, permitindo que o bot entenda o contexto de perguntas anteriores.
-
-### 2. Backup Diário Automatizado de Servidor
--   **Ficheiro:** `02-backup-diario-servidor.json`
--   **Descrição:** Um workflow clássico de infraestrutura para garantir a segurança dos dados.
--   **Funcionalidades:**
-    -   **Gatilho Agendado:** O workflow é executado automaticamente todos os dias às 02:00 da manhã.
-    -   **Execução de Comando:** Executa um script shell no servidor (ex: `pg_dump`) para criar um backup da base de dados.
-    -   **Verificação de Sucesso:** Verifica o código de saída do script. Se for `0`, o backup foi bem-sucedido.
-    -   **Notificação no Slack/Teams:** Envia uma mensagem para um canal específico, informando se o backup foi concluído com **sucesso** (✅) ou se houve uma **falha** (🚨), incluindo a mensagem de erro.
+Essas rotinas eram **ineficientes e propensas a erro humano**, limitando a capacidade da equipa de focar em tarefas estratégicas.
 
 ---
 
-## Como Executar Localmente
+## 🚀 A Solução
 
-Este ambiente pode ser replicado localmente usando Docker.
+Implementação de uma stack de automação **low-code com n8n** e **Docker**, criando **workflows inteligentes e escaláveis** que reduziram em **30% o tempo operacional** e aumentaram a confiabilidade dos processos.
 
-1.  Clone este repositório.
-2.  Crie um ficheiro `.env` a partir do modelo `.env.example` e preencha as variáveis de ambiente.
-3.  Execute o seguinte comando na raiz do projeto:
-    ```bash
-    docker-compose up -d
-    ```
-4.  Aceda ao n8n através do endereço `http://localhost:5678`.
+### 🧱 Arquitetura Utilizada
+| Componente | Função |
+|-------------|--------|
+| 🧩 **n8n** | Plataforma de automação e orquestração de workflows. |
+| 🐳 **Docker & Compose** | Isolamento e portabilidade dos ambientes. |
+| 🐘 **PostgreSQL** | Base de dados do n8n. |
+| ⚡ **Redis** | Armazenamento de contexto de chatbots e cache. |
+| 🤖 **Google Gemini + LangChain** | Processamento de linguagem natural e IA generativa. |
+| 🔗 **APIs REST (WhatsApp, Google Calendar, Slack)** | Integração entre sistemas. |
+
+---
+
+## 🧮 Workflows Incluídos (`/workflows`)
+
+### 1️⃣ Bot de Agendamento Inteligente (WhatsApp)
+📁 **`01-bot-agendamento-whatsapp.json`**
+
+**Descrição:**  
+Um assistente virtual ("Thay") que gerencia agendas via WhatsApp com IA e integrações diretas com Google Calendar.
+
+**Funcionalidades:**
+- Recebe mensagens via **Webhook (WAHA API)**.  
+- Usa **Google Gemini** para interpretar mensagens.  
+- Permite **gestão administrativa** por número autorizado.  
+- Integra com o **Google Calendar** para criar, listar e apagar eventos.  
+- Usa **Redis** para manter o **contexto da conversa**.  
+
+---
+
+### 2️⃣ Backup Diário Automatizado
+📁 **`02-backup-diario-servidor.json`**
+
+**Descrição:**  
+Workflow que executa **backups automáticos** e envia alertas inteligentes.
+
+**Funcionalidades:**
+- ⏰ **Gatilho agendado** (02:00 da manhã).  
+- 💻 **Execução remota de script** (`pg_dump`).  
+- ✅ **Validação automática** de sucesso via código de saída.  
+- 💬 **Notificação no Slack/Teams** com emoji de status e logs do job.  
+
+---
+
+## ⚙️ Como Executar Localmente
+
+1️⃣ Clone o repositório:
+```bash
+git clone https://github.com/<teu-usuario>/<teu-repo>.git
+cd <teu-repo>
+```
+2️⃣ Crie o arquivo .env a partir do modelo:
+
+cp .env.example .env
+
+
+3️⃣ Inicie o ambiente:
+
+docker-compose up -d
+
+
+4️⃣ Acesse o painel do n8n:
+
+http://localhost:5678
+
+🧩 Estrutura do Projeto
+📦 n8n-automation-lab
+ ┣ 📂 workflows/              # JSONs exportados dos fluxos
+ ┣ 📂 assets/                 # Imagens e banners
+ ┣ 📜 docker-compose.yml      # Configuração principal
+ ┣ 📜 .env.example            # Variáveis de ambiente modelo
+ ┗ 📜 README.md               # Este arquivo
+
+💬 Contribuições
+
+Contribuições são muito bem-vindas — automação é um trabalho coletivo!
+Abra um Pull Request com novos fluxos, melhorias ou correções.
+
+👉 Ver Issues
+
+👨‍💻 Autor
+
+Gustavo Barbosa
+💼 Automação • Infraestrutura • IA aplicada a operações
+🌐 Portfólio
+
+💻 GitHub
+ | 💬 LinkedIn
+
+<p align="center"> <i>“Automatizar é transformar complexidade em eficiência.”</i> <br>— n8n Automation Lab </p> ```
