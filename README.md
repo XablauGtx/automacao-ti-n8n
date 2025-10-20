@@ -25,20 +25,14 @@ Para resolver estes desafios, foi implementada uma solução de automação util
 
 ---
 
-## Exemplo de Workflow Implementado
+## Workflows Incluídos (.json)
 
-### Workflow 1: Backup Automatizado de Sistemas
-Este workflow automatiza o processo de backup de uma aplicação crítica.
+Na pasta `/workflows`, você encontrará os exports em formato JSON dos workflows descritos neste documento. Eles podem ser importados diretamente para uma instância do `n8n` para análise.
 
-1.  **Gatilho (Trigger):** Executa todos os dias às 02:00 da manhã (Schedule Trigger).
-2.  **Ação 1 (HTTP Request):** Envia uma requisição para a API do sistema A para iniciar o processo de geração de backup.
-3.  **Ação 2 (Wait):** Aguarda 5 minutos para garantir que o ficheiro de backup foi completamente gerado.
-4.  **Ação 3 (FTP):** Conecta-se ao servidor do sistema A via FTP e descarrega o ficheiro de backup para um local seguro.
-5.  **Ação 4 (IF Node):** Verifica se o download foi bem-sucedido.
-    -   **Em caso de sucesso:** Envia uma notificação para um canal do Microsoft Teams ou Slack com a mensagem "Backup do Sistema A concluído com sucesso".
-    -   **Em caso de falha:** Envia uma notificação de erro para o canal de alertas, permitindo uma ação imediata da equipa.
+- **`01-backup-automatizado.json`**: Automatiza o processo de backup de uma aplicação crítica, incluindo o download do ficheiro e o envio de notificações de sucesso ou falha.
+- **`02-integracao-sistemas.json`**: (Exemplo) Monitora uma API e insere os novos dados noutro sistema em tempo real.
 
-### Screenshot do Workflow
+### Screenshot de Exemplo
 *(Aqui, você deve adicionar um print screen do seu workflow no n8n. Esconda qualquer informação sensível como URLs ou tokens.)*
 
 ![Exemplo de Workflow no n8n](caminho/para/sua/imagem.png)
