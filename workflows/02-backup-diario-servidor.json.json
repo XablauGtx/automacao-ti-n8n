@@ -1,0 +1,156 @@
+{
+  "name": "Backup Diário de Servidor com Notificação",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -960,
+        16
+      ],
+      "id": "1851bd91-b171-4a79-95b7-458d154dd456",
+      "name": "Executa todo dia as 02:00"
+    },
+    {
+      "parameters": {
+        "command": "# Exemplo para um backup de base de dados PostgreSQL:\npg_dump -U meu_usuario -h meu.servidor.com -p 5432 -F c -b -v -f /caminho/para/backups/db_$(date +%Y-%m-%d).dump minha_base_de_dados"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        16
+      ],
+      "id": "7f099607-6c9b-490e-8e2d-118f9094bb7e",
+      "name": "Executa Script de Backup"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $node[\"Executa Script de Backup\"].json.exitCode }}",
+              "value2": 0
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        16
+      ],
+      "id": "cfa8996f-c933-4c0a-bff4-f4da022ea9a8",
+      "name": "Backup Sucesso?"
+    },
+    {
+      "parameters": {
+        "url": "https://hooks.slack.com/services/SEU/WEBHOOK/AQUI",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "✅ Backup do servidor de banco de dados concluído com sucesso!"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -240,
+        -96
+      ],
+      "id": "fac878fa-ecd5-4a37-9831-a79994e4f792",
+      "name": "Notifica Sucesso no Slack"
+    },
+    {
+      "parameters": {
+        "url": "https://hooks.slack.com/services/SEU/WEBHOOK/DE/ERRO/AQUI",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "🚨 ALERTA: Falha no backup do servidor de banco de dados! \n\nErro: `{{ $node[\"Executa Script de Backup\"].json.stderr }}`"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -240,
+        112
+      ],
+      "id": "85c61413-3b87-4ff9-a5fc-8d141e3d6075",
+      "name": "Notifica Falha no Slack"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Executa todo dia as 02:00": {
+      "main": [
+        [
+          {
+            "node": "Executa Script de Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Executa Script de Backup": {
+      "main": [
+        [
+          {
+            "node": "Backup Sucesso?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Backup Sucesso?": {
+      "main": [
+        [
+          {
+            "node": "Notifica Sucesso no Slack",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notifica Falha no Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ec0cb590-ef9d-42e0-a12b-129c3f868382",
+  "meta": {
+    "instanceId": "f32796af5c5040dedbe27f92ce17bce47ddf97030b822e3550ddb2389480de4b"
+  },
+  "id": "xZGapPUHVSjlHLPv",
+  "tags": []
+}

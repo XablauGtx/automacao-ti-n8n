@@ -1,0 +1,959 @@
+{
+  "name": "Whatsapp",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "webhook",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "30ccd7bc-e9a3-4a83-9d02-721849d1d856",
+      "name": "Webhook",
+      "webhookId": "95f2c8ca-dc89-4649-ac0a-c87d7726290d"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1a65179f-d42b-493a-beb0-a48aa14bb49c",
+              "name": "session",
+              "value": "={{ $json.body.session }}",
+              "type": "string"
+            },
+            {
+              "id": "4430d763-5fac-4154-b0f3-17b93102e802",
+              "name": "chatId",
+              "value": "={{ $json.body.payload.from }}",
+              "type": "string"
+            },
+            {
+              "id": "30ceb670-4c9d-4e8b-9b66-5236d0f2b3c4",
+              "name": "pushName",
+              "value": "={{ $json.body.payload._data.Info.PushName }}",
+              "type": "string"
+            },
+            {
+              "id": "47a9f6c8-687e-4eaa-ade0-fa402f039ad1",
+              "name": "payload_id",
+              "value": "={{ $json.body.payload.id }}",
+              "type": "string"
+            },
+            {
+              "id": "6bc0e188-f148-422d-b40b-4f056a1069b8",
+              "name": "event",
+              "value": "={{ $json.body.event }}",
+              "type": "string"
+            },
+            {
+              "id": "0766bfe9-2930-486a-8cf3-8a12fae024f1",
+              "name": "message",
+              "value": "={{ $json.body.payload.body }}",
+              "type": "string"
+            },
+            {
+              "id": "c4ce9f65-b88e-42e3-9b28-2df0e1cdee3e",
+              "name": "fromME",
+              "value": "={{ $json.body.payload.fromMe }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        80
+      ],
+      "id": "24686443-4ab7-497f-98b5-9442c9e0bc53",
+      "name": "Dados"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message }}",
+        "options": {
+          "systemMessage": "Você é \"Thay\", uma secretária virtual de alta performance para a GL Technology. Sua principal função é gerenciar a agenda de forma precisa, eficiente e confidencial.\n\n**FERRAMENTAS DISPONÍVEIS:**\n- `Agendar` (create_event): Cria um novo evento no calendário.\n- `Consultar Agenda` (get_all_events): Lista todos os eventos futuros do calendário.\n\n**REGRA DE PRIVACIDADE MÁXIMA (NÃO PODE SER QUEBRADA):**\nVOCÊ ESTÁ ESTRITAMENTE PROIBIDA de revelar os detalhes (título, descrição, participantes) dos eventos existentes. Você só pode informar se um horário está \"ocupado\" ou \"indisponível\". NUNCA diga o motivo.\n\n**FLUXO DE AGENDAMENTO PROFISSIONAL:**\n\n1.  **ENTENDER O PEDIDO:** Ao receber um pedido de agendamento ou consulta de horários, identifique a intenção do usuário. A data de hoje é 9 de Outubro de 2025.\n\n2.  **SEMPRE CONSULTAR PRIMEIRO:** Sua primeira ação DEVE SER SEMPRE usar a ferramenta `Consultar Agenda`.\n    * **Se o usuário pedir um horário específico (ex: \"amanhã às 10h\"):** Use `Consultar Agenda` para verificar se há algum evento nesse horário.\n    * **Se o usuário pedir por horários livres (ex: \"quais horários você tem?\"):** Use `Consultar Agenda` para obter a lista de todos os eventos do dia solicitado.\n\n3.  **ANALISAR E RESPONDER:**\n    * **Se o horário pedido estiver OCUPADO:** Informe ao usuário e sugira horários próximos que estão livres, com base nos eventos que você encontrou.\n        * **Exemplo de resposta:** \"O horário das 10h de amanhã já está ocupado. Tenho disponibilidade às 11h ou a partir das 14h. Algum desses funciona para você?\"\n    * **Se o usuário pediu por horários livres:** Analise os eventos retornados e informe os \"buracos\" na agenda.\n        * **Exemplo de resposta:** \"Claro! Para amanhã de manhã, tenho horários disponíveis antes das 9h e entre as 10h30 e o meio-dia. Qual prefere?\"\n    * **Se o horário pedido estiver LIVRE:** Prossiga para o próximo passo.\n\n4.  **EXECUTAR O AGENDAMENTO:**\n    * Apenas após confirmar que o horário está livre, colete as informações que faltam (como o título do evento).\n    * Chame a ferramenta `Agendar` (`create_event`) para criar o compromisso.\n\n5.  **CONFIRMAR:** Após a ferramenta ser executada, confirme o agendamento com o usuário."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1600,
+        0
+      ],
+      "id": "278f471d-af70-47cf-95b9-b75c00d9d251",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1392,
+        208
+      ],
+      "id": "c9fb7c83-5cef-4a24-8019-936ec8b5a93b",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "L9PfGvmqWeCjjff3",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Dados').item.json.chatId }}",
+        "sessionTTL": 3600,
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        1520,
+        208
+      ],
+      "id": "484de24a-e69c-4c88-92f8-97f787ecc6df",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "5A9lEOlU8ZIj3zs3",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Seen",
+        "session": "={{ $('Dados').item.json.session }}",
+        "chatId": "={{ $('Dados').item.json.chatId }}",
+        "messageId": "={{ $('Dados').item.json.payload_id }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        2016,
+        0
+      ],
+      "id": "89db3250-e521-47a5-822f-e1ac5a17dd93",
+      "name": "Send Seen",
+      "credentials": {
+        "wahaApi": {
+          "id": "8ZXdhm5Ky9kYkgjr",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Dados').item.json.session }}",
+        "chatId": "={{ $('Dados').item.json.chatId }}",
+        "text": "={{ $('AI Agent').item.json.output }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        2224,
+        0
+      ],
+      "id": "29b25f52-7391-4b44-808a-444e58cb596f",
+      "name": "Send a text message",
+      "credentials": {
+        "wahaApi": {
+          "id": "8ZXdhm5Ky9kYkgjr",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use esta ferramenta para criar um novo evento na agenda. Requer um título, um horário de início e um horário de fim.",
+        "calendar": {
+          "__rl": true,
+          "value": "xablau2020gts@gmail.com",
+          "mode": "list",
+          "cachedResultName": "xablau2020gts@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `Data e horário escolhido pelo cliente`, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `60 minutos após o inicio `, 'string') }}",
+        "additionalFields": {
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', `o título deve contter o motivo do agendamento.`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2016,
+        208
+      ],
+      "id": "deb919c9-912e-4064-b6b4-012c2b717888",
+      "name": "Agendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "tOT6uN0U4vN4Nnst",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "xablau2020gts@gmail.com",
+          "mode": "list",
+          "cachedResultName": "xablau2020gts@gmail.com"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        1920,
+        208
+      ],
+      "id": "51f24825-a93c-49c7-8c34-151080addd22",
+      "name": "Consultar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "tOT6uN0U4vN4Nnst",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "xablau2020gts@gmail.com",
+          "mode": "list",
+          "cachedResultName": "xablau2020gts@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', `Delete o evento solicitado.`, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        1824,
+        208
+      ],
+      "id": "d35ff9cb-2e47-40d3-a831-15f0eb5e5cc8",
+      "name": "Delete",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "tOT6uN0U4vN4Nnst",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a4e8b4d-72e4-45d6-a0bc-4bc4eba17748",
+              "leftValue": "={{ $json.body.payload.from }}",
+              "rightValue": "554197781359",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "25e88238-c095-4d50-b197-bc642dea480c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message }}",
+        "options": {
+          "systemMessage": "Você é \"Thay\", uma secretária virtual de alta performance para a GL Technology.\n\n**ATENÇÃO: Você está falando com o administrador. Para este usuário, você tem permissão para revelar todos os detalhes dos eventos da agenda, incluindo títulos e descrições.**\n\nFERRAMENTAS DISPONÍVEIS:\n- `Agendar` (create_event): Cria um novo evento no calendário.\n- `Consultar Agenda` (get_all_events): Lista todos os eventos futuros do calendário.\n- `Deletar` (delete_event): Apaga um evento existente.\n\n**FLUXO DE AGENDAMENTO PROFISSIONAL:**\n\n1.  **ENTENDER O PEDIDO:** Ao receber um pedido de agendamento ou consulta de horários, identifique a intenção do usuário. A data de hoje é 9 de Outubro de 2025.\n\n2.  **SEMPRE CONSULTAR PRIMEIRO:** Sua primeira ação DEVE SER SEMPRE usar a ferramenta `Consultar Agenda`.\n    * **Se o usuário pedir um horário específico (ex: \"amanhã às 10h\"):** Use `Consultar Agenda` para verificar se há algum evento nesse horário.\n    * **Se o usuário pedir por horários livres (ex: \"quais horários você tem?\"):** Use `Consultar Agenda` para obter a lista de todos os eventos do dia solicitado.\n\n3.  **ANALISAR E RESPONDER (COMO ADMIN):**\n    * **Se o horário pedido estiver OCUPADO:** Informe ao administrador qual é o compromisso existente e sugira horários alternativos.\n        * **Exemplo de resposta:** \"O horário das 10h de amanhã já está ocupado com a 'Reunião de Vendas'. Tenho disponibilidade às 11h ou a partir das 14h. Deseja marcar em um desses?\"\n    * **Se o usuário pediu por horários livres:** Analise os eventos retornados e informe os horários livres, mencionando os compromissos existentes.\n        * **Exemplo de resposta:** \"Claro! Para amanhã de manhã, a agenda tem 'Reunião de Vendas' às 10h. Os horários livres são antes das 10h ou a partir das 11h. Qual prefere?\"\n    * **Se o horário pedido estiver LIVRE:** Prossiga para o próximo passo.\n\n4.  **EXECUTAR O AGENDAMENTO:**\n    * Apenas após confirmar que o horário está livre, colete as informações que faltam (como o título do evento).\n    * Chame a ferramenta `Agendar` (`create_event`) para criar o compromisso.\n\n5.  **DELETAR AGENDAMENTO:**\n    * Quando o administrador pedir para \"deletar\" ou \"cancelar\", use a ferramenta `Consultar Agenda` para encontrar o evento exato e, em seguida, use a ferramenta `Deletar` (`delete_event`) com o ID do evento correto.\n\n6.  **ATUALIZAR AGENDAMENTO:**\n    * Quando o administrador pedir para \"atualizar\" ou \"mudar\" um evento, execute a seguinte sequência:\n        1. Use `Consultar Agenda` para encontrar o evento original.\n        2. Use `Deletar` para apagar o evento original.\n        3. Use `Agendar` para criar o novo evento com as informações atualizadas.\n\n7.  **CONFIRMAR:** Após qualquer ação bem-sucedida (criar, deletar, atualizar), confirme a operação com o usuário."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1472,
+        -576
+      ],
+      "id": "e84ff0ed-ad48-4ef4-956c-5facd50191b1",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use esta ferramenta para criar um novo evento na agenda. Requer um título, um horário de início e um horário de fim.",
+        "calendar": {
+          "__rl": true,
+          "value": "xablau2020gts@gmail.com",
+          "mode": "list",
+          "cachedResultName": "xablau2020gts@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `Data e horário escolhido pelo cliente`, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `60 minutos após o inicio `, 'string') }}",
+        "additionalFields": {
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', `o título deve contter o motivo do agendamento.`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        1808,
+        -368
+      ],
+      "id": "748169e6-8e4d-4410-9e74-ffc4ccedfcea",
+      "name": "Agendar1",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "tOT6uN0U4vN4Nnst",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "xablau2020gts@gmail.com",
+          "mode": "list",
+          "cachedResultName": "xablau2020gts@gmail.com"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        1696,
+        -368
+      ],
+      "id": "f3f54f66-76ce-4adf-9232-4313671a46fa",
+      "name": "Consultar1",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "tOT6uN0U4vN4Nnst",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "xablau2020gts@gmail.com",
+          "mode": "list",
+          "cachedResultName": "xablau2020gts@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', `Delete o evento solicitado.`, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        1600,
+        -368
+      ],
+      "id": "2e520466-1a02-4305-a67d-b0895bfa0fcf",
+      "name": "Delete1",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "tOT6uN0U4vN4Nnst",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        -368
+      ],
+      "id": "4fde8b0b-8996-44a9-9aee-a7a8348792bd",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "L9PfGvmqWeCjjff3",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.chatId }}",
+        "sessionTTL": 3600,
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        1392,
+        -368
+      ],
+      "id": "2b80682d-16e8-4b22-8425-fe9d6990461c",
+      "name": "Redis Chat Memory1",
+      "credentials": {
+        "redis": {
+          "id": "5A9lEOlU8ZIj3zs3",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Seen",
+        "session": "={{ $('Dados1').item.json.session }}",
+        "chatId": "={{ $('Dados1').item.json.chatId }}",
+        "messageId": "={{ $('Dados1').item.json.payload_id }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        1888,
+        -576
+      ],
+      "id": "242af2a5-f1bc-47a9-b6b2-e754582399e0",
+      "name": "Send Seen1",
+      "credentials": {
+        "wahaApi": {
+          "id": "8ZXdhm5Ky9kYkgjr",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Dados1').item.json.session }}",
+        "chatId": "={{ $('Dados1').item.json.chatId }}",
+        "text": "={{ $('AI Agent1').item.json.output }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        2064,
+        -576
+      ],
+      "id": "38e23668-263a-4cdb-a588-8d58caa235f5",
+      "name": "Send a text message1",
+      "credentials": {
+        "wahaApi": {
+          "id": "8ZXdhm5Ky9kYkgjr",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1a65179f-d42b-493a-beb0-a48aa14bb49c",
+              "name": "session",
+              "value": "={{ $json.body.session }}",
+              "type": "string"
+            },
+            {
+              "id": "4430d763-5fac-4154-b0f3-17b93102e802",
+              "name": "chatId",
+              "value": "={{ $json.body.payload.from }}",
+              "type": "string"
+            },
+            {
+              "id": "30ceb670-4c9d-4e8b-9b66-5236d0f2b3c4",
+              "name": "pushName",
+              "value": "={{ $json.body.payload._data.Info.PushName }}",
+              "type": "string"
+            },
+            {
+              "id": "47a9f6c8-687e-4eaa-ade0-fa402f039ad1",
+              "name": "payload_id",
+              "value": "={{ $json.body.payload.id }}",
+              "type": "string"
+            },
+            {
+              "id": "6bc0e188-f148-422d-b40b-4f056a1069b8",
+              "name": "event",
+              "value": "={{ $json.body.event }}",
+              "type": "string"
+            },
+            {
+              "id": "0766bfe9-2930-486a-8cf3-8a12fae024f1",
+              "name": "message",
+              "value": "={{ $json.body.payload.body }}",
+              "type": "string"
+            },
+            {
+              "id": "c4ce9f65-b88e-42e3-9b28-2df0e1cdee3e",
+              "name": "fromME",
+              "value": "={{ $json.body.payload.fromMe }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        -576
+      ],
+      "id": "2369565e-fe68-4b06-b64e-a1a0e34eb75d",
+      "name": "Dados1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.event }}",
+                    "rightValue": "=message",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "65b317b7-37b5-4b3d-997d-41bf58633c4e"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1168,
+        80
+      ],
+      "id": "2b82a141-fd5b-49b8-b634-f935a7cd4cfa",
+      "name": "Switch"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "accept": "application/json, text/plain, */*",
+            "content-type": "application/json",
+            "user-agent": "WAHA/2025.9.8",
+            "x-webhook-request-id": "01K74QCKQFKS89M6K2XX33KXVK",
+            "x-webhook-timestamp": "1760021597935",
+            "content-length": "2195",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "host": "host.docker.internal:5678",
+            "connection": "keep-alive"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "id": "evt_01k74qckqfngtx8pn6cs97pmfa",
+            "timestamp": 1760021597935,
+            "event": "message",
+            "session": "default",
+            "metadata": {},
+            "me": {
+              "id": "554195097919@c.us",
+              "pushName": "Gl Technology",
+              "lid": "147481258123467@lid",
+              "jid": "554195097919:8@s.whatsapp.net"
+            },
+            "payload": {
+              "id": "false_554197781359@c.us_ACEBF0745B60F26690E49D624B85FE60",
+              "timestamp": 1760021597,
+              "from": "554197781359@c.us",
+              "fromMe": false,
+              "source": "app",
+              "body": "Olá",
+              "to": null,
+              "participant": null,
+              "hasMedia": false,
+              "media": null,
+              "ack": 2,
+              "ackName": "DEVICE",
+              "replyTo": null,
+              "_data": {
+                "Info": {
+                  "Chat": "554197781359@s.whatsapp.net",
+                  "Sender": "554197781359@s.whatsapp.net",
+                  "IsFromMe": false,
+                  "IsGroup": false,
+                  "AddressingMode": "",
+                  "SenderAlt": "175853157773342@lid",
+                  "RecipientAlt": "",
+                  "BroadcastListOwner": "",
+                  "BroadcastRecipients": null,
+                  "ID": "ACEBF0745B60F26690E49D624B85FE60",
+                  "ServerID": 0,
+                  "Type": "text",
+                  "PushName": "Gustavo X",
+                  "Timestamp": "2025-10-09T14:53:17Z",
+                  "Category": "",
+                  "Multicast": false,
+                  "MediaType": "",
+                  "Edit": "",
+                  "MsgBotInfo": {
+                    "EditType": "",
+                    "EditTargetID": "",
+                    "EditSenderTimestampMS": "0001-01-01T00:00:00Z"
+                  },
+                  "MsgMetaInfo": {
+                    "TargetID": "",
+                    "TargetSender": "",
+                    "TargetChat": "",
+                    "DeprecatedLIDSession": null,
+                    "ThreadMessageID": "",
+                    "ThreadMessageSenderJID": ""
+                  },
+                  "VerifiedName": null,
+                  "DeviceSentMeta": null
+                },
+                "Message": {
+                  "conversation": "Olá",
+                  "messageContextInfo": {
+                    "deviceListMetadata": {
+                      "senderKeyHash": "jQW91mysf3gC+w==",
+                      "senderTimestamp": 1759695076,
+                      "recipientKeyHash": "UILcI6fdePLAmA==",
+                      "recipientTimestamp": 1760018373
+                    },
+                    "deviceListMetadataVersion": 2,
+                    "messageSecret": "NdEYa3tLsvYy4UAbAgO8A3NQxRWeKlhCTFCrJQAarpU="
+                  }
+                },
+                "IsEphemeral": false,
+                "IsViewOnce": false,
+                "IsViewOnceV2": false,
+                "IsViewOnceV2Extension": false,
+                "IsDocumentWithCaption": false,
+                "IsLottieSticker": false,
+                "IsBotInvoke": false,
+                "IsEdit": false,
+                "SourceWebMsg": null,
+                "UnavailableRequestID": "",
+                "RetryCount": 0,
+                "NewsletterMeta": null,
+                "RawMessage": {
+                  "conversation": "Olá",
+                  "messageContextInfo": {
+                    "deviceListMetadata": {
+                      "senderKeyHash": "jQW91mysf3gC+w==",
+                      "senderTimestamp": 1759695076,
+                      "recipientKeyHash": "UILcI6fdePLAmA==",
+                      "recipientTimestamp": 1760018373
+                    },
+                    "deviceListMetadataVersion": 2,
+                    "messageSecret": "NdEYa3tLsvYy4UAbAgO8A3NQxRWeKlhCTFCrJQAarpU="
+                  }
+                },
+                "Status": 3
+              }
+            },
+            "environment": {
+              "version": "2025.9.8",
+              "engine": "GOWS",
+              "tier": "CORE",
+              "browser": null
+            }
+          },
+          "webhookUrl": "http://host.docker.internal:5678/webhook-test/webhook",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dados": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send Seen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Seen": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Dados1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agendar1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Send Seen1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Seen1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dados1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "004d2729-98ce-440c-b564-caf6c7054908",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f32796af5c5040dedbe27f92ce17bce47ddf97030b822e3550ddb2389480de4b"
+  },
+  "id": "whivfcmqTF6LHesh",
+  "tags": []
+}
